@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; //useEffect, useRef
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import Jumbotron from "react-bootstrap/Jumbotron";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 
@@ -13,6 +12,57 @@ import "./App.css";
 
 function App() {
   const [showMessage, setShowMessage] = useState(false);
+  const [values, setValues] = useState({
+    fullname: "",
+    email: "",
+  });
+  const [formerrors, setFormErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (Object.keys(formerrors).length === 0 && isSubmitting) {
+      //complete submission
+      console.log("Form data is ok so complete submission");
+    }
+  }, [formerrors, isSubmitting]);
+
+  //this method handles the each form field changing and updates the relevant
+  //state value for that input
+  const handleChange = (event) => {
+    // event.persist();
+    setValues((values) => ({
+      ...values,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  //this method will check each field in your form. You define
+  //the rules for each field
+  const validate = () => {
+    console.log("Validate the form....");
+
+    let errors = {};
+
+    //name field
+    if (!values.fullname) {
+      errors.fullname = "Full name is required";
+    }
+
+    //email field
+    if (!values.email) {
+      errors.email = "Email address is required";
+    } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+      errors.email = "Email address is invalid";
+    }
+    return errors;
+  };
+
+  const handleSubmit = (event) => {
+    if (event) event.preventDefault();
+    console.log("Submitting the form ->");
+    setIsSubmitting(true);
+    setFormErrors(validate(values));
+  };
 
   return (
     <div className="App">
@@ -46,85 +96,50 @@ function App() {
             </Col>
           </Row>
           <Row>
+            <Col></Col>
             <Col>
-              <Jumbotron>
-                <h1 className="header">Our form</h1>
-                <p>
-                  We will build a form here. You may want to use this are as
-                  login instructions, or some kind of product intro.
-                </p>
-                <p>
-                  This is a h1 tag and paragraph in a Jumbotron, which is the
-                  first column in a row of two columns.
-                </p>
-                <p>
-                  Here is a selection of buttons showing some of the different
-                  styles available from Bootstrap. You can&nbsp;
-                  <a href="https://react-bootstrap.github.io/components/buttons/">
-                    read more here
-                  </a>
-                  .
-                </p>
-                <hr />
-                <Button variant="outline-primary">Primary</Button>{" "}
-                <Button variant="outline-secondary">Secondary</Button>{" "}
-                <Button variant="outline-success">Success</Button>{" "}
-                <Button variant="danger">Danger</Button>{" "}
-                <Button variant="info">Info</Button>{" "}
-              </Jumbotron>
-            </Col>
-            <Col>
-              <Form>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="formGridName">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    placeholder="Full Name"
+                    type="text"
+                    name="fullname"
+                    value={values.fullname}
+                    onChange={handleChange}
+                    required
+                  />
+                  {formerrors.name && (
+                    <p className="frmError">{formerrors.name}</p>
+                  )}
+                </Form.Group>
                 <Form.Row>
                   <Form.Group as={Col} controlId="formGridEmail">
                     <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
-                  </Form.Group>
-
-                  <Form.Group as={Col} controlId="formGridPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" />
-                  </Form.Group>
-                </Form.Row>
-                <Form.Group controlId="formGridAddress1">
-                  <Form.Label>Address</Form.Label>
-                  <Form.Control placeholder="Street Name" />
-                </Form.Group>
-                <Form.Group controlId="formGridAddress2">
-                  <Form.Label>Address 2</Form.Label>
-                  <Form.Control placeholder="Apartment, studio, or floor" />
-                </Form.Group>
-                <Form.Row>
-                  <Form.Group as={Col} controlId="formGridCity">
-                    <Form.Label>City</Form.Label>
-                    <Form.Control />
-                  </Form.Group>
-
-                  <Form.Group as={Col} controlId="formGridState">
-                    <Form.Label>State</Form.Label>
-                    <Form.Control as="select" defaultValue="Choose...">
-                      <option>Choose...</option>
-                      <option>...</option>
-                    </Form.Control>
-                  </Form.Group>
-
-                  <Form.Group as={Col} controlId="formGridZip">
-                    <Form.Label>Zip</Form.Label>
-                    <Form.Control />
+                    <Form.Control
+                      placeholder="Enter email"
+                      type="email"
+                      name="email"
+                      value={values.email}
+                      onChange={handleChange}
+                    />
+                    {formerrors.email && (
+                      <p className="text-warning">{formerrors.email}</p>
+                    )}
                   </Form.Group>
                 </Form.Row>
-                <Form.Group id="formGridCheckbox">
-                  <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group>
+
                 <Button
+                  type="submit"
                   variant="primary"
                   size="lg"
-                  onClick={() => setShowMessage(true)}
+                  //disabled={disable}
                 >
                   Submit
                 </Button>
               </Form>
             </Col>
+            <Col></Col>
           </Row>
         </Container>
       </Container>
