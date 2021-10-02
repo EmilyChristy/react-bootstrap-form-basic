@@ -15,14 +15,14 @@ The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
 
-##Branches
+## Branches
 Each branch contains a different code example as follows:
 
-###Basic Bootstrap Form example
+### Basic Bootstrap Form example
 https://github.com/EmilyChristy/react-bootstrap-form-basic/tree/part-one-basic-form
 
-###Bootstrap Form with validation and error handling example
+### Bootstrap Form with validation and error handling example
 https://github.com/EmilyChristy/react-bootstrap-form-basic/tree/part-two
 
-###React Bootstrap button examples
+### React Bootstrap button examples
 https://github.com/EmilyChristy/react-bootstrap-form-basic/tree/bootstrap-buttons
