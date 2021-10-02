@@ -10,7 +10,7 @@ import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 
 import addImg from "../src/img/add.svg";
-import { Heart } from "react-bootstrap-icons";
+import { Heart, CameraFill } from "react-bootstrap-icons";
 import { BarChartFill } from "react-bootstrap-icons";
 
 import "./App.css";
@@ -18,15 +18,11 @@ import "./App.css";
 function App() {
   const [showMessage, setShowMessage] = useState(false);
 
-  // const handleSubmit = (event) => {
-  //   if (event) event.preventDefault();
-
-  //   if (validate(values)) {
-  //     setShowMessage(true);
-  //   } else {
-  //     setShowMessage(false);
-  //   }
-  // };
+  const handleSubmit = (event) => {
+    if (event) event.preventDefault();
+    //do stuff here
+    setShowMessage("true");
+  };
 
   return (
     <div className="App">
@@ -41,9 +37,8 @@ function App() {
             <Alert show={showMessage} variant="success">
               <Alert.Heading>Success</Alert.Heading>
               <p>
-                This is an alert, and these can be shown in a variety of styles
-                provided by Bootstrap. Our form submit button simply shows this
-                alert. Another post will go through form validation and errors.
+                You clicked the camera button! This is an Alert, and these can
+                be shown in a variety of styles provided by Bootstrap.
               </p>
               <hr />
               <div className="d-flex justify-content-end">
@@ -106,6 +101,14 @@ function App() {
               <Button size="sm" variant="success">
                 <Heart /> Like
               </Button>
+            </Stack>
+
+            <h2>Add an onClick event to the button</h2>
+            {/* //onClick={!isLoading  */}
+            <Stack direction="horizontal" gap={3}>
+              <Button size="lg" onClick={handleSubmit}>
+                Take photo <CameraFill />
+              </Button>{" "}
             </Stack>
           </Col>
         </Row>
