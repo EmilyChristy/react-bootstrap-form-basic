@@ -27,3 +27,8 @@
 .App-link {
   color: #61dafb;
 }
+
+h2 {
+  margin-top: 20px;
+  text-align: left;
+}
