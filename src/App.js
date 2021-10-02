@@ -104,7 +104,6 @@ function App() {
             </Stack>
 
             <h2>Add an onClick event to the button</h2>
-            {/* //onClick={!isLoading  */}
             <Stack direction="horizontal" gap={3}>
               <Button size="lg" onClick={handleSubmit}>
                 Take photo <CameraFill />
