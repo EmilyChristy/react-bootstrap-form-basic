@@ -18,8 +18,7 @@ import "./App.css";
 function App() {
   const [showMessage, setShowMessage] = useState(false);
 
-  const handleSubmit = (event) => {
-    if (event) event.preventDefault();
+  const handleClick = () => {
     //do stuff here
     setShowMessage("true");
   };
@@ -105,7 +104,7 @@ function App() {
 
             <h2>Add an onClick event to the button</h2>
             <Stack direction="horizontal" gap={3}>
-              <Button size="lg" onClick={handleSubmit}>
+              <Button size="lg" onClick={handleClick}>
                 Take photo <CameraFill />
               </Button>{" "}
             </Stack>
